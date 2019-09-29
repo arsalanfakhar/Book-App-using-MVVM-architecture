@@ -20,6 +20,17 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BooksHolder>
     private Context mCtx;
     private List<Book> mBookList;
 
+    private onItemClickListener clickListener;
+
+
+
+    public void setmBookList(List<Book> mBookList) {
+        this.mBookList = mBookList;
+        notifyDataSetChanged();
+    }
+
+
+
     public BooksAdapter(Context mCtx, List<Book> mBookList) {
         this.mCtx = mCtx;
         this.mBookList = mBookList;
@@ -50,11 +61,30 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BooksHolder>
     public class BooksHolder extends RecyclerView.ViewHolder{
 
         private BookListItemBinding bookListItemBinding;
+
         public BooksHolder(BookListItemBinding bookListItemBinding) {
             super(bookListItemBinding.getRoot());
             this.bookListItemBinding=bookListItemBinding;
 
+
+            bookListItemBinding.getRoot().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //it should not invoke if list is empty or it has not been declared
+                    if(clickListener!=null && getAdapterPosition()!=RecyclerView.NO_POSITION)
+                    clickListener.onItemClick(mBookList.get(getAdapterPosition()));
+
+                }
+            });
+
         }
     }
 
+    public void setClickListener(onItemClickListener clickListener) {
+        this.clickListener = clickListener;
+    }
+
+    public interface onItemClickListener{
+        void onItemClick(Book book);
+    }
 }

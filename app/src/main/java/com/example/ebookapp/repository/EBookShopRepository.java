@@ -12,6 +12,7 @@ import com.example.ebookapp.database.entity.Category;
 import java.util.List;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 public class EBookShopRepository {
     private CategoryDAO categoryDAO;
@@ -40,6 +41,10 @@ public class EBookShopRepository {
         return bookDAO.getBook(bookId);
     }
 
+    public LiveData<Category> getCategoryById(long catId){
+        return categoryDAO.getCategoryById(catId);
+    }
+
     public void insertCategory(Category category){
         new InsertCategoryAsyncTask(categoryDAO).execute();
     }
@@ -48,13 +53,13 @@ public class EBookShopRepository {
         new DeleteCategoryAsyncTask(categoryDAO).execute();
     }
     public void insertBook(Book book){
-        new BookInsertCategoryAsyncTask(bookDAO).execute();
+        new BookInsertCategoryAsyncTask(bookDAO).execute(book);
     }
     public void deleteBook(Book book){
-        new BookDeleteAsyncTask(bookDAO).execute();
+        new BookDeleteAsyncTask(bookDAO).execute(book);
     }
     public void updateBook(Book book){
-        new BookUpdateAsyncTask(bookDAO).execute();
+        new BookUpdateAsyncTask(bookDAO).execute(book);
     }
 
 

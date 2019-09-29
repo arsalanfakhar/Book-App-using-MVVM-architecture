@@ -4,7 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="clickHandler"
+            type="com.example.ebookapp.AddBook.AddookClickHandler" />
+        <variable
+            name="book"
+            type="com.example.ebookapp.database.entity.Book" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -56,7 +61,8 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="@={book.mbookname}"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -73,10 +79,14 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:id="@+id/book_price"
+                android:inputType="number"
+                android:text="@{String.valueOf(book.mbookprice)}"/>
+
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.jaredrummler.materialspinner.MaterialSpinner
+        <Spinner
             android:id="@+id/materialSpinner2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -139,6 +149,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Submit"
+            android:onClick="@{clickHandler::onSubmitClicked}"
             app:layout_constraintStart_toStartOf="@+id/materialSpinner2"
             app:layout_constraintTop_toBottomOf="@+id/add_cat_layout" />
 

@@ -14,14 +14,16 @@ import androidx.room.Query;
 public interface CategoryDAO {
 
     @Insert
-    public long addCategory(Category... category);
+    long addCategory(Category category);
 
     @Delete
-    public void deleteCategory(Category category);
+    void deleteCategory(Category category);
 
     //live data means it will be done on background thread and it is live
     @Query("Select * from tbl_categories")
-    public LiveData<List<Category>>  getAllCategories();
+    LiveData<List<Category>>  getAllCategories();
 
+    @Query("Select * from tbl_categories where id=:cat_id")
+    LiveData<Category>  getCategoryById(long cat_id);
 
 }

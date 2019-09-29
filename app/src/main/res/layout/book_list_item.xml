@@ -15,9 +15,11 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="0dp"
-            app:cardCornerRadius="20dp"
-            app:cardBackgroundColor="@color/design_default_color_primary"
             android:layout_height="100dp"
+            android:layout_marginBottom="8dp"
+            app:cardBackgroundColor="@color/design_default_color_primary"
+            app:cardCornerRadius="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -33,18 +35,18 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="16dp"
+                    android:text="@{book.mbookname}"
                     android:textColor="@android:color/white"
-                    android:textSize="24sp"
-                    android:text="text" />
+                    android:textSize="24sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="18sp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="16dp"
+                    android:text="@{String.valueOf(book.mbookprice)}"
                     android:textColor="@android:color/white"
-                    android:text="text" />
+                    android:textSize="18sp" />
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>

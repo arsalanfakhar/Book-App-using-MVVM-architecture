@@ -1,6 +1,7 @@
 package com.example.ebookapp.database.entity;
 
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
@@ -52,5 +53,11 @@ public class Category{
 
     public void setCategory_description(String category_description) {
         this.category_description = category_description;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return this.category_name;
     }
 }

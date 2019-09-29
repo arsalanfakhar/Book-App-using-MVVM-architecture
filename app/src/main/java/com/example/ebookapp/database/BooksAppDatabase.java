@@ -60,21 +60,31 @@ public abstract class BooksAppDatabase extends RoomDatabase {
             category1.setCategory_description("Lorem ipsum");
 
             Category category2=new Category();
-            category1.setCategory_name("Novels");
-            category1.setCategory_description("Lorem ipsum");
+            category2.setCategory_name("Novels");
+            category2.setCategory_description("Lorem ipsum");
 
             Category category3=new Category();
-            category1.setCategory_name("Stories");
-            category1.setCategory_description("Lorem ipsum");
+            category3.setCategory_name("Stories");
+            category3.setCategory_description("Lorem ipsum");
 
-            categoryDAO.addCategory(category1,category2,category3);
+            categoryDAO.addCategory(category1);
+            categoryDAO.addCategory(category2);
+            categoryDAO.addCategory(category3);
+
 
             Book book1=new Book();
             book1.setMbookname("Castle of Love");
             book1.setMbookprice(20);
             book1.setCategory_id(1);
 
+            Book book2=new Book();
+            book2.setMbookname("Bella chao");
+            book2.setMbookprice(10);
+            book2.setCategory_id(2);
+
             bookDAO.addBook(book1);
+            bookDAO.addBook(book2);
+
             return null;
         }
 
