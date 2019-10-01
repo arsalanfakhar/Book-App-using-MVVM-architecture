@@ -175,10 +175,22 @@ public class MainActivity extends AppCompatActivity {
             mainActivityViewModel.addNewBook(book);
 
         }
-        else if(resultCode==RESULT_OK && requestCode==EDITCODE){
+        else if(resultCode==RESULT_OK && requestCode==EDITCODE && data!=null){
+
+            Book book=new Book();
+
+
+            book.setMbookname(data.getStringExtra(AddBook.BOOK_NAME));
+
+            String price=data.getStringExtra(AddBook.BOOK_UNIT_PRICE);
+            Log.v("price",price);
+
+            book.setMbookprice(Integer.valueOf(price));
+
+            book.setCategory_id(data.getLongExtra(AddBook.BOOK_CAT_ID,1));
+            book.setMbookid(data.getLongExtra(AddBook.BOOK_ID,1));
+            mainActivityViewModel.updateBook(book);
             Toast.makeText(this,"editcode",Toast.LENGTH_SHORT).show();
-
-
         }
 
     }

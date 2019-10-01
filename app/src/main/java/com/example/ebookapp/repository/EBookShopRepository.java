@@ -46,11 +46,11 @@ public class EBookShopRepository {
     }
 
     public void insertCategory(Category category){
-        new InsertCategoryAsyncTask(categoryDAO).execute();
+        new InsertCategoryAsyncTask(categoryDAO).execute(category);
     }
 
     public void deleteCategory(Category category){
-        new DeleteCategoryAsyncTask(categoryDAO).execute();
+        new DeleteCategoryAsyncTask(categoryDAO).execute(category);
     }
     public void insertBook(Book book){
         new BookInsertCategoryAsyncTask(bookDAO).execute(book);

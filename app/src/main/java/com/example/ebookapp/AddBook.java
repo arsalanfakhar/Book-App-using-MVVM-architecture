@@ -66,8 +66,11 @@ public class AddBook extends AppCompatActivity {
             setTitle("Edit a Book");
             selection_added=true;
             intentCat=intent.getStringExtra(BOOK_CAT_ID);
+            addBookBinding.setBook(book);
             book.setMbookname(intent.getStringExtra(BOOK_NAME));
             book.setMbookprice(intent.getIntExtra(BOOK_UNIT_PRICE,0));
+            book.setMbookid(intent.getLongExtra(BOOK_ID,1));
+            addBookBinding.btnSubmit.setText("UPDATE");
             //addBookBinding.materialSpinner2.setSelectedIndex(intent.getIntExtra(BOOK_CAT_ID,1));
         }
         else {
@@ -78,6 +81,7 @@ public class AddBook extends AppCompatActivity {
         mainActivityViewModel.getCategories().observe(this, new Observer<List<Category>>() {
             @Override
             public void onChanged(List<Category> categories) {
+
 
                 categories.add(new Category(0,"Add a Category","new cat"));
                 ArrayAdapter<Category> listArrayAdapter=new ArrayAdapter<Category>(AddBook.this,R.layout.spinner_item,categories);
@@ -204,9 +208,14 @@ public class AddBook extends AppCompatActivity {
             public void onClick(View view) {
                 if(TextUtils.isEmpty(catname.getText().toString())){
                     Toast.makeText(AddBook.this, "Enter category name!", Toast.LENGTH_SHORT).show();
+
                     return;
                 }
                 else {
+                    Category category=new Category();
+                    category.setCategory_name(catname.getText().toString());
+                    category.setCategory_description(catdescrip.getText().toString());
+                    mainActivityViewModel.addCategory(category);
                     alertDialog.dismiss();
                 }
             }
@@ -218,7 +227,7 @@ public class AddBook extends AppCompatActivity {
     public class AddookClickHandler {
         Context context;
 
-        public AddookClickHandler(Context context) {
+        AddookClickHandler(Context context) {
             this.context = context;
         }
 
@@ -228,6 +237,7 @@ public class AddBook extends AppCompatActivity {
                 Toast.makeText(context,"Name field cannot be empty",Toast.LENGTH_SHORT).show();
             }
             else {
+
                 Intent returnIntent=new Intent();
                 returnIntent.putExtra(BOOK_NAME,book.getMbookname());
                 if(!TextUtils.isEmpty(addBookBinding.bookPrice.getText()))
@@ -235,6 +245,7 @@ public class AddBook extends AppCompatActivity {
                 Category category= (Category) addBookBinding.materialSpinner2.getSelectedItem();
 
                 returnIntent.putExtra(BOOK_CAT_ID,category.getMcategory_id());
+                returnIntent.putExtra(BOOK_ID,book.getMbookid());
                 setResult(RESULT_OK,returnIntent);
                 finish();
             }
