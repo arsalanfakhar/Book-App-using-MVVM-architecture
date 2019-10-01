@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         binding= DataBindingUtil.setContentView(this,R.layout.activity_main);
         binding.setLifecycleOwner(this);
         mainActivityViewModel= ViewModelProviders.of(this).get(MainActivityViewModel.class);
-
+        binding.emptyView.setVisibility(View.GONE);
 
         mainActivityViewModel.getCategories().observe(this, new Observer<List<Category>>() {
             @Override
@@ -57,13 +57,6 @@ public class MainActivity extends AppCompatActivity {
                 loadBooksOfCategory();
             }
         });
-
-
-//        binding.spinner.setItems(mainActivityViewModel.getCategories().getValue());
-
-
-
-
 
         clickHandler=new MainActivityClickHandler(this);
         binding.setClickHandler(clickHandler);
@@ -84,13 +77,6 @@ public class MainActivity extends AppCompatActivity {
         });
         initRecylerView();
     }
-//
-//    public void initSpinner(){
-//        Log.v("viewmodelcons","data called");
-//        categoryArrayAdapter=new ArrayAdapter<Category>(this,R.layout.spinner_item,mainActivityViewModel.getCategories().getValue());
-//        categoryArrayAdapter.setDropDownViewResource(R.layout.spinner_item);
-//        binding.spinner.setAdapter(categoryArrayAdapter);
-//    }
 
     private void initRecylerView(){
         booksAdapter=new BooksAdapter(this,new ArrayList<Book>());
@@ -113,18 +99,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-//    private void loadBooksInitialData(){
-//
-//        //Load the spinner only for the first time
-//        mainActivityViewModel.getCatById(1).observe(this, new Observer<Category>() {
-//            @Override
-//            public void onChanged(Category category) {
-//                initRecylerView();
-//                loadBooksOfCategory(category.getMcategory_id());
-//            }
-//        });
-//
-//    }
 
     //Call this method to load books of a category
     public void loadBooksOfCategory(){
@@ -134,6 +108,13 @@ public class MainActivity extends AppCompatActivity {
         mainActivityViewModel.getBookofASelectedCategory(categoryId).observe(this, new Observer<List<Book>>() {
             @Override
             public void onChanged(List<Book> books) {
+                if(books.isEmpty()){
+                    binding.emptyView.setVisibility(View.VISIBLE);
+                }
+                else {
+                    binding.emptyView.setVisibility(View.GONE);
+                }
+
                 booksAdapter.setmBookList(books);
             }
         });
@@ -178,7 +159,6 @@ public class MainActivity extends AppCompatActivity {
         else if(resultCode==RESULT_OK && requestCode==EDITCODE && data!=null){
 
             Book book=new Book();
-
 
             book.setMbookname(data.getStringExtra(AddBook.BOOK_NAME));
 

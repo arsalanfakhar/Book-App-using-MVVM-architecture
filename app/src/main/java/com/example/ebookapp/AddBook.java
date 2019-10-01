@@ -59,6 +59,7 @@ public class AddBook extends AppCompatActivity {
         book=new Book();
         addBookBinding.setBook(book);
 
+
         //check intent
         intent=getIntent();
         //edit books
@@ -91,7 +92,6 @@ public class AddBook extends AppCompatActivity {
                 //Now set the selected category in Viewmodel
                 //mainActivityViewModel.setSelectedCategory(categories.get(0));
 
-
                 //When converting a variable always check it
                 if(selection_added && !(TextUtils.isEmpty(intentCat))){
                     int id=Integer.valueOf(intentCat);
@@ -102,12 +102,11 @@ public class AddBook extends AppCompatActivity {
                     selection_added=false;
                 }
 
-
           //      Toast.makeText(AddBook.this,""+addBookBinding.materialSpinner2.getSelectedIndex(),Toast.LENGTH_SHORT).show();
-
 
             }
         });
+
         addBookBinding.materialSpinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -117,11 +116,9 @@ public class AddBook extends AppCompatActivity {
 
                 if(category.toString().equals("Add a Category")){
                     makeDialog();
-
                 }
                 else {
                     //Update the category in ViewModel
-
                     mainActivityViewModel.setSelectedCategory(category);
                 }
             }
@@ -220,7 +217,6 @@ public class AddBook extends AppCompatActivity {
                 }
             }
         });
-
 
     }
 
