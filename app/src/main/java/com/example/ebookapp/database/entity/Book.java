@@ -3,8 +3,12 @@ package com.example.ebookapp.database.entity;
 
 
 
+import android.os.Build;
+
+import java.util.Objects;
 import java.util.Observable;
 
+import androidx.annotation.RequiresApi;
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 import androidx.databinding.library.baseAdapters.BR;
@@ -90,4 +94,23 @@ public class Book extends BaseObservable {
         this.category_id = category_id;
         notifyPropertyChanged(BR.category_id);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Book)) return false;
+        Book book = (Book) o;
+        return getMbookid() == book.getMbookid() &&
+                getMbookprice() == book.getMbookprice() &&
+                getCategory_id() == book.getCategory_id() &&
+                getMbookname().equals(book.getMbookname());
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @Override
+    public int hashCode() {
+        return Objects.hash(getMbookid(), getMbookname(), getMbookprice(), getCategory_id());
+    }
+
+
 }

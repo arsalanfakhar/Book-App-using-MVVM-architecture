@@ -5,14 +5,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.ebookapp.BooksDiffCallBack;
 import com.example.ebookapp.R;
 import com.example.ebookapp.database.entity.Book;
 import com.example.ebookapp.databinding.BookListItemBinding;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BooksHolder> {
@@ -24,12 +27,19 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BooksHolder>
 
 
 
-    public void setmBookList(List<Book> mBookList) {
-        this.mBookList = mBookList;
-        notifyDataSetChanged();
+    public void setmBookList(List<Book> newBookList) {
+//        this.mBookList = mBookList;
+//        notifyDataSetChanged();
+
+        //now Diff util will only update the required data not the whole list done by it.
+        final DiffUtil.DiffResult result= DiffUtil.calculateDiff(new BooksDiffCallBack(mBookList,newBookList),false);
+        this.mBookList=newBookList;
+        result.dispatchUpdatesTo(BooksAdapter.this);
     }
 
-
+    public List<Book> getmBookList() {
+        return mBookList;
+    }
 
     public BooksAdapter(Context mCtx, List<Book> mBookList) {
         this.mCtx = mCtx;

@@ -1,11 +1,15 @@
 package com.example.ebookapp;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -44,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
         mainActivityViewModel.getCategories().observe(this, new Observer<List<Category>>() {
             @Override
             public void onChanged(List<Category> categories) {
-
                 ArrayAdapter<Category> listArrayAdapter=new ArrayAdapter<Category>(MainActivity.this,R.layout.spinner_item,categories);
                 listArrayAdapter.setDropDownViewResource(R.layout.spinner_item);
                 binding.spinner.setAdapter(listArrayAdapter);
@@ -76,6 +79,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         initRecylerView();
+
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                Book book=booksAdapter.getmBookList().get(viewHolder.getAdapterPosition());
+                mainActivityViewModel.deleteBook(book);
+
+            }
+        }).attachToRecyclerView(binding.recyclerView);
+
     }
 
     private void initRecylerView(){
