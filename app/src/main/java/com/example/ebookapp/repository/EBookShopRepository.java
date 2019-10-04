@@ -10,9 +10,10 @@ import com.example.ebookapp.database.entity.Book;
 import com.example.ebookapp.database.entity.Category;
 
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
 public class EBookShopRepository {
     private CategoryDAO categoryDAO;
@@ -45,23 +46,67 @@ public class EBookShopRepository {
         return categoryDAO.getCategoryById(catId);
     }
 
-    public void insertCategory(Category category){
-        new InsertCategoryAsyncTask(categoryDAO).execute(category);
+    public void insertCategory(final Category category){
+//        new InsertCategoryAsyncTask(categoryDAO).execute(category);
 
+        //We can use executors instead of asyn task if we do not want to use its complex methods
+
+        //We can attach as many threads as we want
+        //It runs on separate thread
+        Executor executor= Executors.newSingleThreadExecutor();
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                categoryDAO.addCategory(category);
+            }
+        });
 
     }
 
-    public void deleteCategory(Category category){
-        new DeleteCategoryAsyncTask(categoryDAO).execute(category);
+    public void deleteCategory(final Category category){
+    //    new DeleteCategoryAsyncTask(categoryDAO).execute(category);
+
+        Executor executor= Executors.newSingleThreadExecutor();
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                categoryDAO.deleteCategory(category);
+            }
+        });
+
     }
-    public void insertBook(Book book){
-        new BookInsertCategoryAsyncTask(bookDAO).execute(book);
+    public void insertBook(final Book book){
+       // new BookInsertCategoryAsyncTask(bookDAO).execute(book);
+
+        Executor executor= Executors.newSingleThreadExecutor();
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                bookDAO.addBook(book);
+            }
+        });
     }
-    public void deleteBook(Book book){
-        new BookDeleteAsyncTask(bookDAO).execute(book);
+    public void deleteBook(final Book book){
+        //new BookDeleteAsyncTask(bookDAO).execute(book);
+
+        Executor executor= Executors.newSingleThreadExecutor();
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                bookDAO.deleteBook(book);
+            }
+        });
     }
-    public void updateBook(Book book){
-        new BookUpdateAsyncTask(bookDAO).execute(book);
+    public void updateBook(final Book book){
+        //new BookUpdateAsyncTask(bookDAO).execute(book);
+
+        Executor executor= Executors.newSingleThreadExecutor();
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                bookDAO.updateBook(book);
+            }
+        });
     }
 
 
